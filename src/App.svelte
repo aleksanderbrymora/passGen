@@ -1,6 +1,5 @@
 <script>
 	let length = 6;
-	let password = '';
 	let copied = false;
 
 	const randLetter = () => String.fromCharCode(Math.floor(Math.random() * 26) + 65);
@@ -19,13 +18,15 @@
 		setTimeout(() => copied = false, 2000)
 	};
 
-	const generate = () => {
+	const generate = l => {
 		let pass = '';
-		for (let i = 0; i < length; i++) {
+		for (let i = 0; i < l; i++) {
 			pass += randoms[Math.floor(Math.random() * randoms.length)]()
 		}
-		password = pass;
+		return pass;
 	};
+
+ 	$: password = generate(length);
 </script>
 
 <main>
@@ -36,11 +37,24 @@
 		<input bind:value={length} on:change={generate} min="6" max="50" id="length" type="range">
 
 		<p id="password">{password}</p>
-		{#if password.length}<button on:click={copyPass}>Copy</button>{/if}
+		<button on:click={copyPass}>Copy</button>
 		{#if copied} <p>Copied!</p> {/if}
 	</div>
 </main>
 
 <style>
+	main {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 
+	}
+	.generator-input {
+		max-width: 960px;
+		width: 100%;
+		margin: auto;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
 </style>

@@ -1,30 +1,30 @@
 <script>
-	export let name;
+	let length = 6;
+	let password = '';
+	const randLetter = () => String.fromCharCode(Math.floor(Math.random() * 26) + 65);
+	const randNumber = () => (Math.floor(Math.random() * 10)).toString();
+	const randomSymbol = () => '~!@_#$%^:*+&`|'.split('')[Math.floor(Math.random() * 14)];
+	const randoms = [randLetter, randNumber, randomSymbol];
+	const generate = () => {
+		let pass = '';
+		for (let i = 0; i < length; i++) {
+			pass += randoms[Math.floor(Math.random() * randoms.length)]()
+		}
+		password = pass;
+	};
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<h1>Password Generator</h1>
+	<div class="generator-input">
+		<p>Length: {length}</p>
+		<label for="length">Set the length</label>
+		<input bind:value={length} on:change={generate} min="6" max="50" id="length" type="range">
+
+		<p>{password}</p>
+	</div>
 </main>
 
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
 </style>
